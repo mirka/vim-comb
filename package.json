@@ -1,0 +1,19 @@
+{
+   "name": "vim-comb",
+   "description": "Allows csscomb.js to be used from vim",
+   "repository": "https://github.com/danhodos/vim-comb",
+   "version": "1.0.0",
+   "author": "Dan Hodos <danhodos@gmail.com>",
+   "engines": {
+      "node": ">= 0.10.0"
+   },
+   "dependencies": {
+      "csscomb": "~> 3.0.4"
+   },
+   "main": "plugin/index.js",
+   "jshintConfig": {
+      "enforceall": true,
+      "node": true,
+      "nocomma": false
+   }
+}
