@@ -9,13 +9,13 @@ if (fs.existsSync(cssCombFile)) {
   var comb = new Comb('zen');
 }
 
-process.stdin.resume()
 process.stdin.setEncoding('utf8');
 
 var contentChunks = [];
-process.stdin.on('data', function(chunk) {
+process.stdin.on('readable', function() {
+  var chunk = process.stdin.read();
   contentChunks.push(chunk);
-})
+});
 
 process.stdin.on('end', function() {
   var syntax = process.argv[2];
