@@ -20,8 +20,10 @@ process.stdin.on('readable', function() {
 process.stdin.on('end', function() {
   var syntax = process.argv[2];
   var output = comb.processString(contentChunks.join(), { syntax: syntax });
-
-  console.log(output);
-  process.exit(0);
+  if (output) {
+    console.log(output);
+    process.exit(0);
+  } else {
+    process.exit(1);
+  }
 });
-
