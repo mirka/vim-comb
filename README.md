@@ -32,21 +32,13 @@ git clone https://github.com/danhodos/vim-comb.git
 
 ## Usage
 
-When in a CSS (or a CSS-like file, e.g. [SCSS](http://sass-lang.com/)), you can run `:CSScomb` to format the entire file. You can also visually select a range (e.g. a selector, perhaps with `vas`) and run `:CSScomb` to just format that range.
+Because vim-comb is implemented using a `formatexpr` that is set for CSS (and CSS-like files, e.g. [SCSS](http://sass-lang.com/)), you can use the standard `gq` with a motion (or after making a visual selection) to format your code through csscomb.js.
 
-This plugin does not add any mappings for you, but you can feel free to add your own. I use the following in my `.vimrc`:
-
-```vim
-" Run CSScomb against the entire file:
-nnoremap <leader>c :CSScomb<CR>
-
-# Run CSS against the visually-selected range:
-vnoremap <leader>c :CSScomb<CR>
-```
+If csscomb.js returns an error (say, for instance, if you encounter [this problem](https://github.com/csscomb/csscomb.js/issues/275)), then the error will be displayed without changing the contents of the buffer.
 
 ## Configuration
 
-vim-comb will look for a file named `.csscomb.json` in your project directory. If it cannot find a one, it will use a stock pre-defined configuration file.
+vim-comb will look for a file named `.csscomb.json` in your project directory. If it cannot find one, it will use a stock pre-defined configuration file.
 
 The format of the `.csscomb.json` file is [documented on the CSScomb site](http://csscomb.com/docs/options.md).
 
