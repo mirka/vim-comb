@@ -25,7 +25,10 @@ function! s:vimComb(line1, line2)
     let lines = split(output, "\n")
 
     if v:shell_error == 0
-        call setline(a:line1, lines)
+        " NOTE: We cannot use `setline` here, because the number of formatted
+        " lines may not be the same as the number of unformatted lines.
+        execute a:line1 . ',' . a:line2 . 'd'
+        call append(a:line1 - 1, lines)
     else
         echo output
     endif
