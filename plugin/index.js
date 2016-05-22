@@ -1,12 +1,21 @@
 var fs = require('fs');
 var Comb = require('csscomb');
 
+function getUserHome() {
+  return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+}
+
 var cssCombFile = process.argv[3];
+var cssCombFileGlobal = getUserHome() + "/.csscomb.json";
+
 if (fs.existsSync(cssCombFile)) {
   var config = require(cssCombFile);
   var comb = new Comb(config);
+} else if (fs.existsSync(cssCombFileGlobal)) {
+  var config = require(cssCombFileGlobal);
+  var comb = new Comb(config);
 } else {
-  var comb = new Comb('zen');
+  var comb = new Comb('yandex');
 }
 
 process.stdin.setEncoding('utf8');
