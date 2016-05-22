@@ -4,11 +4,10 @@ vim-comb is a vim bridge to [csscomb.js](https://github.com/csscomb/csscomb.js),
 
 ## Requirements
 
-You will need csscomb.js installed, which is a [node.js](http://nodejs.org/) package. On Mac OS X with [homebrew](http://brew.sh/) installed, you can get set up with:
+You will need node installed so that this pluging can install a copy of csscomb.js, which is a [node.js](http://nodejs.org/) package. On Mac OS X with [homebrew](http://brew.sh/) installed, you can get set up with:
 
 ```
 brew install node
-npm install -g csscomb
 ```
 
 ## Installation
@@ -18,16 +17,18 @@ npm install -g csscomb
 Add this to `.vimrc`:
 
 ```vim
-Plug 'danhodos/vim-comb'
+Plug 'danhodos/vim-comb',  {'do': './install.sh'}
 ```
 
 and run `:PlugInstall`
+
 
 ### With Pathogen
 
 ```
 cd ~/.vim/bundle
 git clone https://github.com/danhodos/vim-comb.git
+vim-comb/install.sh
 ```
 
 ## Usage
