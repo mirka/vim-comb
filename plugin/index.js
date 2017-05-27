@@ -28,11 +28,14 @@ process.stdin.on('readable', function() {
 
 process.stdin.on('end', function() {
   var syntax = process.argv[2];
-  var output = comb.processString(contentChunks.join(), { syntax: syntax });
-  if (output) {
-    console.log(output);
-    process.exit(0);
-  } else {
-    process.exit(1);
-  }
+  comb.processString(contentChunks.join(''), { syntax: syntax })
+		.then(function (output) {
+			console.log(output);
+			process.exit(0);
+		})
+		.catch(function (err) {
+			console.log(err.context + '\n');
+			console.log(err.stack);
+			process.exit(1);
+		});
 });

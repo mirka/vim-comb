@@ -8,7 +8,7 @@
       "node": ">= 0.10.0"
    },
    "dependencies": {
-      "csscomb": "~> 3.0.4"
+      "csscomb": "~> 4.1.0"
    },
    "main": "plugin/index.js",
    "jshintConfig": {
