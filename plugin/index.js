@@ -1,12 +1,16 @@
 var fs = require('fs');
+var findUp = require('find-up');
 var Comb = require('csscomb');
+
+var cssCombFileName = '.csscomb.json';
 
 function getUserHome() {
   return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 }
 
-var cssCombFile = process.argv[3];
-var cssCombFileGlobal = getUserHome() + "/.csscomb.json";
+var currentFile = process.argv[3];
+var cssCombFile = findUp.sync(cssCombFileName, { cwd: currentFile });
+var cssCombFileGlobal = getUserHome() + '/' + cssCombFileName;
 
 if (fs.existsSync(cssCombFile)) {
   var config = require(cssCombFile);

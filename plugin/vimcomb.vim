@@ -15,12 +15,12 @@ let s:vimCombPluginDirectory = fnamemodify(expand("<sfile>"), ":h")
 "
 " Returns nothing.
 function! s:vimComb(line1, line2)
-    let configFilePath = fnameescape(fnamemodify('.csscomb.json', ':p'))
+    let currentFilePath = fnameescape(expand('%:p'))
     let extension = expand('%:e')
     let nodeFile = fnameescape(s:vimCombPluginDirectory . "/index.js")
     let node_path = "NODE_PATH=" . fnameescape(s:vimCombPluginDirectory . "/../")
 
-    let command = join([node_path, "node", nodeFile, extension, configFilePath], " ")
+    let command = join([node_path, "node", nodeFile, extension, currentFilePath], " ")
     let content = join(getline(a:line1, a:line2), "\n")
     let output = system(command, content)
     let lines = split(output, "\n")
