@@ -1,45 +1,40 @@
-var fs = require('fs');
 var findUp = require('find-up');
 var Comb = require('csscomb');
 
+// Config
 var cssCombFileName = '.csscomb.json';
+var defaultConfig = 'yandex';
 
-function getUserHome() {
-  return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-}
-
+// Arguments
+var syntax = process.argv[2];
 var currentFile = process.argv[3];
-var cssCombFile = findUp.sync(cssCombFileName, { cwd: currentFile });
-var cssCombFileGlobal = getUserHome() + '/' + cssCombFileName;
 
-if (fs.existsSync(cssCombFile)) {
-  var config = require(cssCombFile);
-  var comb = new Comb(config);
-} else if (fs.existsSync(cssCombFileGlobal)) {
-  var config = require(cssCombFileGlobal);
-  var comb = new Comb(config);
-} else {
-  var comb = new Comb('yandex');
-}
+var comb = initCombInstance();
+var contentChunks = [];
+
 
 process.stdin.setEncoding('utf8');
 
-var contentChunks = [];
-process.stdin.on('readable', function() {
+process.stdin.on('readable', function () {
   var chunk = process.stdin.read();
   contentChunks.push(chunk);
 });
 
-process.stdin.on('end', function() {
-  var syntax = process.argv[2];
+process.stdin.on('end', function () {
   comb.processString(contentChunks.join(''), { syntax: syntax })
-		.then(function (output) {
-			console.log(output);
-			process.exit(0);
-		})
-		.catch(function (err) {
-			console.log(err.context + '\n');
-			console.log(err.stack);
-			process.exit(1);
-		});
+    .then(function (output) {
+      console.log(output);
+      process.exit(0);
+    })
+    .catch(function (err) {
+      console.log(err.context + '\n');
+      console.log(err.stack);
+      process.exit(1);
+    });
 });
+
+function initCombInstance() {
+  var cssCombFile = findUp.sync(cssCombFileName, { cwd: currentFile });
+  var config = cssCombFile ? require(cssCombFile) : defaultConfig;
+  return new Comb(config);
+}
